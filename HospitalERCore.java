@@ -58,7 +58,13 @@ public class HospitalERCore{
 
         time = 0;           // set the "tick" to zero.
         // reset the waiting room, the treatment room, and the statistics.
-        /*# YOUR CODE HERE */
+        if (usePriorityQueue) {
+            waitingRoom = new PriorityQueue<Patient>();
+        }
+        else {
+            waitingRoom = new ArrayDeque<Patient>();
+        }
+        treatmentRoom.clear();
 
         UI.clearGraphics();
         UI.clearText();
