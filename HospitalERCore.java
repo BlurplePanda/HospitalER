@@ -84,7 +84,16 @@ public class HospitalERCore{
             //   temporary list, and after the loop is done, remove all 
             //   the items on the temporary list from the set.
 
-            /*# YOUR CODE HERE */
+            time ++;
+
+            List<Patient> toRemove = new ArrayList<>();
+            for (Patient p : treatmentRoom) {
+                if (p.currentTreatmentFinished()) {
+                    toRemove.add(p);
+                    UI.println(time + ": Discharge: " + p);
+                }
+            }
+            treatmentRoom.removeAll(toRemove);
 
             // Gets any new patient that has arrived and adds them to the waiting room
             Patient newPatient = PatientGenerator.getNextPatient(time);
