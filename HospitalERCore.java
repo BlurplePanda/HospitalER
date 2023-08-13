@@ -84,8 +84,9 @@ public class HospitalERCore{
             //   temporary list, and after the loop is done, remove all 
             //   the items on the temporary list from the set.
 
-            time ++;
+            time ++; // Advance the time by one "tick"
 
+            // Find all patients in treatment room who've finished current treatment & discharge them
             List<Patient> toRemove = new ArrayList<>();
             for (Patient p : treatmentRoom) {
                 if (p.currentTreatmentFinished()) {
@@ -94,6 +95,19 @@ public class HospitalERCore{
                 }
             }
             treatmentRoom.removeAll(toRemove);
+
+            // Process 1 time tick for each patient currently being treated or waiting in the waiting room
+            for (Patient p : treatmentRoom) {
+                p.advanceCurrentTreatmentByTick();
+            }
+            for (Patient p : waitingRoom) {
+                p.waitForATick();
+            }
+
+            // Move patients from the waiting room to the treatment room if there is space
+            if (treatmentRoom.size() < MAX_PATIENTS) {
+                treatmentRoom.add(waitingRoom.poll());
+            }
 
             // Gets any new patient that has arrived and adds them to the waiting room
             Patient newPatient = PatientGenerator.getNextPatient(time);
