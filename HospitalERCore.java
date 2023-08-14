@@ -41,6 +41,9 @@ public class HospitalERCore{
     private int totalTreated = 0;
     private double totalWaitTime = 0;
 
+    private int prio1Treated = 0;
+    private double prio1Time = 0;
+
     // Fields for the simulation
     private boolean running = false;
     private int time = 0; // The simulated time - the current "tick"
@@ -95,6 +98,10 @@ public class HospitalERCore{
                     UI.println(time + ": Discharge: " + p);
                     totalWaitTime += p.getTotalWaitingTime();
                     totalTreated++;
+                    if (p.getPriority() == 1) {
+                        prio1Time += p.getTotalWaitingTime();
+                        prio1Treated++;
+                    }
                 }
             }
             treatmentRoom.removeAll(toRemove);
@@ -133,6 +140,9 @@ public class HospitalERCore{
     public void reportStatistics(){
         double avgWaitTime = totalWaitTime/totalTreated;
         UI.printf("Processed %d with average waiting time of %.2f minutes", totalTreated, avgWaitTime);
+        double avgPrio1Wait = prio1Time/prio1Treated;
+        UI.printf("Processed %d priority 1 patients with average waiting time of %.2f minutes",
+                  prio1Treated, avgPrio1Wait);
     }
 
 
