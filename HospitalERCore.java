@@ -38,7 +38,8 @@ public class HospitalERCore{
     private Set<Patient> treatmentRoom = new HashSet<Patient>();
 
     // fields for the statistics
-    /*# YOUR CODE HERE */
+    private int totalTreated = 0;
+    private double totalWaitTime = 0;
 
     // Fields for the simulation
     private boolean running = false;
@@ -92,6 +93,8 @@ public class HospitalERCore{
                 if (p.currentTreatmentFinished()) {
                     toRemove.add(p);
                     UI.println(time + ": Discharge: " + p);
+                    totalWaitTime += p.getTotalWaitingTime();
+                    totalTreated++;
                 }
             }
             treatmentRoom.removeAll(toRemove);
@@ -128,8 +131,8 @@ public class HospitalERCore{
      * Report summary statistics about all the patients that have been discharged.
      */
     public void reportStatistics(){
-        /*# YOUR CODE HERE */
-
+        double avgWaitTime = totalWaitTime/totalTreated;
+        UI.printf("Processed %d with average waiting time of %.2f minutes", totalTreated, avgWaitTime);
     }
 
 
