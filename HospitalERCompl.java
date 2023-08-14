@@ -110,6 +110,7 @@ public class HospitalERCompl {
                 List<Patient> discharged = dept.dischargePatients();
                 for (Patient p : discharged) {
                     p.removeCurrentTreatment();
+                    // move them to their next treatment or discharge completely if finished
                     if (p.allTreatmentsCompleted()) {
                         discharge(p);
                     } else {
@@ -117,8 +118,8 @@ public class HospitalERCompl {
                         newDept.addPatient(p);
                     }
                 }
-                dept.processTick();
-                dept.tryTreat();
+                dept.processTick(); // every patient in dept processes 1 tick
+                dept.tryTreat(); // tries to move patients from the waiting room to the treatment room
             }
 
             // Gets any new patient that has arrived and adds them to the waiting room

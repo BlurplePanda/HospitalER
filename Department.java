@@ -48,6 +48,11 @@ public class Department {
 
     // Methods 
 
+    /**
+     * Removes any patients who've finished their treatment in this dept from the treatment room
+     *
+     * @return the list of patients who have/are being removed/discharged.
+     */
     public List<Patient> dischargePatients() {
         List<Patient> toDischarge = new ArrayList<>();
         for (Patient p : treatmentRoom) {
@@ -59,10 +64,18 @@ public class Department {
         return toDischarge;
     }
 
+    /**
+     * Add a patient to the department to wait for their treatment
+     *
+     * @param p the patient added
+     */
     public void addPatient(Patient p) {
         waitingRoom.offer(p);
     }
 
+    /**
+     * Process one time tick for each patient currently being treated or waiting
+     */
     public void processTick() {
         for (Patient p : waitingRoom) {
             p.waitForATick();
@@ -72,13 +85,14 @@ public class Department {
         }
     }
 
+    /**
+     * Move patients from the waiting room into the treatment room, if there are any spaces.
+     */
     public void tryTreat() {
         if (treatmentRoom.size() < maxPatients && waitingRoom.size() > 0) {
             treatmentRoom.add(waitingRoom.poll());
         }
     }
-
-    /*# YOUR CODE HERE */
 
     /**
      * Draw the department: the patients being treated and the patients waiting
