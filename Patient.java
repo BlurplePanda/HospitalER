@@ -97,7 +97,18 @@ public class Patient implements Comparable<Patient>{
      * The ordering depends on the triage priority and the arrival time.
      */
     public int compareTo(Patient other){
-        /*# YOUR CODE HERE */
+        if (this.priority < other.priority) {
+            return -1;
+        }
+        if (this.priority > other.priority) {
+            return 1;
+        }
+        if (this.arrival < other.arrival) {
+            return -1;
+        }
+        if (this.arrival > other.arrival) {
+            return 1;
+        }
 
         return 0;
     }

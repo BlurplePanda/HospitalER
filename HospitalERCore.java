@@ -115,7 +115,7 @@ public class HospitalERCore{
             }
 
             // Move patients from the waiting room to the treatment room if there is space
-            if (treatmentRoom.size() < MAX_PATIENTS) {
+            if (treatmentRoom.size() < MAX_PATIENTS && waitingRoom.size() > 0) {
                 treatmentRoom.add(waitingRoom.poll());
             }
 
@@ -140,6 +140,7 @@ public class HospitalERCore{
     public void reportStatistics(){
         double avgWaitTime = totalWaitTime/totalTreated;
         UI.printf("Processed %d with average waiting time of %.2f minutes", totalTreated, avgWaitTime);
+        UI.println();
         double avgPrio1Wait = prio1Time/prio1Treated;
         UI.printf("Processed %d priority 1 patients with average waiting time of %.2f minutes",
                   prio1Treated, avgPrio1Wait);
