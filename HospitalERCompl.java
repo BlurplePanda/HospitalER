@@ -168,13 +168,11 @@ public class HospitalERCompl {
             prio1WaitTime += wait;
             prio1TreatTime += treat;
             prio1Treated++;
-        }
-        else if (p.getPriority() == 2) {
+        } else if (p.getPriority() == 2) {
             prio2WaitTime += wait;
             prio2TreatTime += treat;
             prio2Treated++;
-        }
-        else if (p.getPriority() == 3) {
+        } else if (p.getPriority() == 3) {
             prio3WaitTime += wait;
             prio3TreatTime += treat;
             prio3Treated++;
@@ -214,6 +212,7 @@ public class HospitalERCompl {
 
     /**
      * Set up the GUI: buttons to control simulation and sliders for setting parameters
+     * Note the dimensions of sliders may be adversely affected if the user's screen or system app scale is too small.
      */
     public void setupGUI() {
         UI.addButton("Reset (Queue)", () -> {
@@ -236,10 +235,12 @@ public class HospitalERCompl {
                 });
         UI.addSlider("Av arrival interval", 1, 50, PatientGenerator.getArrivalInterval(),
                 PatientGenerator::setArrivalInterval);
+        //priority probability adjustments
         UI.addSlider("Prob of Pri 1", 1, 100, PatientGenerator.getProbPri1(),
                 PatientGenerator::setProbPri1);
         UI.addSlider("Prob of Pri 2", 1, 100, PatientGenerator.getProbPri2(),
                 PatientGenerator::setProbPri2);
+        //treatment probability adjustments
         UI.addSlider("Prob of MRI", 1, 100, PatientGenerator.getProbMRI(),
                 PatientGenerator::setProbMRI);
         UI.addSlider("Prob of Surgery", 1, 100, PatientGenerator.getProbSurgery(),
