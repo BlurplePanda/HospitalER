@@ -51,6 +51,14 @@ public class HospitalERCompl {
     private double prio1WaitTime = 0;
     private double prio1TreatTime = 0;
 
+    private int prio2Treated = 0;
+    private double prio2WaitTime = 0;
+    private double prio2TreatTime = 0;
+
+    private int prio3Treated = 0;
+    private double prio3WaitTime = 0;
+    private double prio3TreatTime = 0;
+
     // Fields for the simulation
     private boolean running = false;
     private int time = 0; // The simulated time - the current "tick"
@@ -85,10 +93,16 @@ public class HospitalERCompl {
         // reset statistics
         totalTreated = 0;
         totalWaitTime = 0;
-        prio1WaitTime = 0;
-        prio1Treated = 0;
         totalTreatTime = 0;
+        prio1Treated = 0;
+        prio1WaitTime = 0;
         prio1TreatTime = 0;
+        prio2Treated = 0;
+        prio2WaitTime = 0;
+        prio2TreatTime = 0;
+        prio3Treated = 0;
+        prio3WaitTime = 0;
+        prio3TreatTime = 0;
 
         UI.clearGraphics();
         UI.clearText();
@@ -145,13 +159,25 @@ public class HospitalERCompl {
     public void discharge(Patient p) {
         double wait = p.getTotalWaitingTime();
         double treat = p.getTotalTreatmentTime();
+        //update total stats
         totalWaitTime += wait;
         totalTreatTime += treat;
         totalTreated++;
+        //update prio stats
         if (p.getPriority() == 1) {
             prio1WaitTime += wait;
             prio1TreatTime += treat;
             prio1Treated++;
+        }
+        else if (p.getPriority() == 2) {
+            prio2WaitTime += wait;
+            prio2TreatTime += treat;
+            prio2Treated++;
+        }
+        else if (p.getPriority() == 3) {
+            prio3WaitTime += wait;
+            prio3TreatTime += treat;
+            prio3Treated++;
         }
         UI.println(time + ": Discharged: " + p);
     }
@@ -160,15 +186,27 @@ public class HospitalERCompl {
      * Report summary statistics about the simulation
      */
     public void reportStatistics() {
+        //stats for total patients
         double avgWaitTime = totalWaitTime / totalTreated;
         double avgTreatTime = totalTreatTime / totalTreated;
-        UI.printf("Processed %d with average waiting time of %.2f minutes and average treatment time of %.2f minutes",
+        UI.printf("Processed %d patients with average waiting time of %.2f minutes \n" +
+                        "and average treatment time of %.2f minutes\n",
                 totalTreated, avgWaitTime, avgTreatTime);
-        UI.println();
+        //stats for prio 1 patients
         double avgPrio1Wait = prio1WaitTime / prio1Treated;
         double avgPrio1Treat = prio1TreatTime / prio1Treated;
-        UI.printf("Processed %d priority 1 patients with average waiting time of %.2f minutes and "
-                + "average treatment time of %.2f minutes", prio1Treated, avgPrio1Wait, avgPrio1Treat);
+        UI.printf("Processed %d priority 1 patients with average waiting time of %.2f minutes \n"
+                + "and average treatment time of %.2f minutes\n", prio1Treated, avgPrio1Wait, avgPrio1Treat);
+        //stats for prio 2 patients
+        double avgPrio2Wait = prio2WaitTime / prio2Treated;
+        double avgPrio2Treat = prio2TreatTime / prio2Treated;
+        UI.printf("Processed %d priority 2 patients with average waiting time of %.2f minutes \n"
+                + "and average treatment time of %.2f minutes\n", prio2Treated, avgPrio2Wait, avgPrio2Treat);
+        //stats for prio 3 patients
+        double avgPrio3Wait = prio3WaitTime / prio3Treated;
+        double avgPrio3Treat = prio3TreatTime / prio3Treated;
+        UI.printf("Processed %d priority 3 patients with average waiting time of %.2f minutes \n"
+                + "and average treatment time of %.2f minutes\n", prio3Treated, avgPrio3Wait, avgPrio3Treat);
     }
 
 

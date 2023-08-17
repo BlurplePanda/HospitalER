@@ -191,8 +191,10 @@ public class Patient implements Comparable<Patient>{
         StringBuilder ans = new StringBuilder(name);
         ans.append(", pri:").append(priority).append(", Ar:").append(arrival).append(", ").
         append("treat: ").append(totalTreatmentTime).append(" wait: ").append(totalWaitTime).append("\n    ");
-        ans.append(treatments.size()).append(" treatments:");
-        ans.append(treatments.toString());
+        if (!treatments.isEmpty()) {
+            ans.append(treatments.size()).append(" treatments:");
+            ans.append(treatments.toString());
+        }
         return ans.toString();
     }
 
