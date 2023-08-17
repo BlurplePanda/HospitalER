@@ -240,6 +240,14 @@ public class HospitalERCompl {
                 PatientGenerator::setProbPri1);
         UI.addSlider("Prob of Pri 2", 1, 100, PatientGenerator.getProbPri2(),
                 PatientGenerator::setProbPri2);
+        UI.addSlider("Prob of MRI", 1, 100, PatientGenerator.getProbMRI(),
+                PatientGenerator::setProbMRI);
+        UI.addSlider("Prob of Surgery", 1, 100, PatientGenerator.getProbSurgery(),
+                PatientGenerator::setProbSurgery);
+        UI.addSlider("Prob of X-Ray", 1, 100, PatientGenerator.getProbXRay(),
+                PatientGenerator::setProbXRay);
+        UI.addSlider("Prob of UltraSound", 1, 100, PatientGenerator.getProbUltraSound(),
+                PatientGenerator::setProbUltraSound);
         UI.addButton("Quit", UI::quit);
         UI.setWindowSize(1000, 600);
         UI.setDivider(0.5);

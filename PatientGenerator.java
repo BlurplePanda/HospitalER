@@ -28,6 +28,10 @@ public class PatientGenerator {
     public static int arrivalInterval = 5;   // new patient every 5 ticks, on average
     public static double probPri1 = 0.1; // 10% priority 1 patients
     public static double probPri2 = 0.2; // 20% priority 2 patients
+    public static double probMRI = 0.05;
+    public static double probSurgery = 0.1;
+    public static double probXRay = 0.35;
+    public static double probUltraSound = 0.6;
     
     /**
      * Static method to get a new Patient
@@ -64,6 +68,18 @@ public class PatientGenerator {
     public static int getProbPri2(){return (int)(probPri2*100);}
     public static void setProbPri2(double v){probPri2 = v/100;}
 
+    public static int getProbMRI(){return (int)(probMRI*100);}
+    public static void setProbMRI(double v){probMRI = v/100;}
+
+    public static int getProbSurgery(){return (int)(probSurgery*100);}
+    public static void setProbSurgery(double v){probSurgery = v/100;}
+
+    public static int getProbXRay(){return (int)(probXRay*100);}
+    public static void setProbXRay(double v){probXRay = v/100;}
+
+    public static int getProbUltraSound(){return (int)(probUltraSound*100);}
+    public static void setProbUltraSound(double v){probUltraSound = v/100;}
+
 
     // Creating random names and treatments
     /**
@@ -85,8 +101,8 @@ public class PatientGenerator {
         String lastDept = "ER";
 
         //many high priority patients need surgery.
-        if ((priority==1  && random.nextDouble()<0.4) ||
-        (priority==2 && random.nextDouble()<0.1)){
+        if ((priority==1  && random.nextDouble()<4*probSurgery) ||
+        (priority==2 && random.nextDouble()<probSurgery)){
             treatments.offer(new Treatment("Surgery", GenerateTime(60)));
             lastDept = "Surgery";
 
@@ -96,10 +112,10 @@ public class PatientGenerator {
             do { // ensure that department is not the same as the previous department.
                 double num = random.nextDouble();
 
-                if (num<0.05)     {newTreatment = new Treatment("MRI", GenerateTime(200));}
-                else if (num<0.1) {newTreatment = new Treatment("Surgery", GenerateTime(200));}
-                else if (num<0.35){newTreatment = new Treatment("X-Ray", GenerateTime(20));}
-                else if (num<0.6) {newTreatment = new Treatment("UltraSound", GenerateTime(20));}
+                if (num<probMRI)     {newTreatment = new Treatment("MRI", GenerateTime(200));}
+                else if (num<probSurgery) {newTreatment = new Treatment("Surgery", GenerateTime(200));}
+                else if (num<probXRay){newTreatment = new Treatment("X-Ray", GenerateTime(20));}
+                else if (num<probUltraSound) {newTreatment = new Treatment("UltraSound", GenerateTime(20));}
                 else {newTreatment = new Treatment("ER", GenerateTime(10));}
             } while (newTreatment.getDepartment()==lastDept);
             treatments.offer(newTreatment);
